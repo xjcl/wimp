@@ -1,0 +1,18 @@
+x get basic board, chars and fields done
+- design concrete field
+- add dice (2d4? no i want 1s -> total d8)
+- draw field out of text
+- finish party handler to allow
+    4 humans on 1 computer to play/move properly
+- implement chance time
+- implement 1 minigame (button-mashing? lol)
+
+...
+- bump mg total up to 6
+...
+- add ais, or pseudo-ais
+...
+- draw on 2d-surface (pyglet? tkinter? pygame?)
+...
+- add internet functionality
+...
