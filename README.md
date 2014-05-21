@@ -2,3 +2,26 @@ wimp
 ====
 
 "WIMP is not Mario Party". Instead, it's a fun board game of strategy and luck.
+
+dev
+===
+
+WIMP is written in Python2 (2 required by Pyglet), which should allow for easy
+modification and addition of minigames, boards and modes.
+
+Progress can (hopefully) be tracked in the "milestones" file. ATM, it's still
+terminal-based. If the project has been abandoned for some time as you read
+this, don't fret to at least take a look at the code. It will depend on a
+minimum of libraries and as it is pure Python, it should be easy to get into.
+
+PROGRESS IMAGE/VIDEO OF THE MONTH:
+
+/May isn't over yet/
+
+
+usage
+=====
+
+`git clone https://github.com/xjcl/wimp.git`
+
+`python party.py`
