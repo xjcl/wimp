@@ -25,3 +25,20 @@ usage
 `git clone https://github.com/xjcl/wimp.git`
 
 `python party.py`
+
+blitz how-to-play guide
+=======================
+
+ATM you play two human players going around the board drawn
+in 'boards/a.png'. the terminal-based program will spit out
+coordinates in the form (y, x) to help you find out where
+you are.
+
+the one minigame that's there ATM is a token minigame. you
+just enter the final score of each character.
+
+'roll' to roll your die.
+
+'left', 'up', 'right', 'down' to choose a path at a junction.
+
+'y', 'n' to choose whether to purchase a star.
