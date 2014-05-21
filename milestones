@@ -1,19 +1,18 @@
 x get basic board, chars and fields done
-- design concrete field
-- add dice (2d4? no i want 1s -> total d8)
-- draw field out of text
-- finish party handler to allow
-    4 humans on 1 computer to play/move properly
 - implement chance time
 - implement 1 minigame (button-mashing? lol)
     1 minigame for 2, 3 and 4 players!
+- add random star spawning spaces
+- ok we definitely need a visual representation (text/pyglet)
+
 
 ...
 - bump mg total up to 6
+- bump board total up to 2 (and use themes! water etc.)
 ...
 - add ais, or pseudo-ais
 ...
 - draw on 2d-surface (pyglet? tkinter? pygame?)
 ...
-- add internet functionality
+- add internet functionality (like so or with web.py/gh-pages?)
 ...

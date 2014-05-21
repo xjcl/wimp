@@ -110,7 +110,7 @@ class Party(object):
             print(str(c)+": "+str(c.coins))
     
     def run(self):
-        for i in range(3):
+        for i in range(10):
             self.turn = i
             p.advance_turn()
             #self.save() # save current standings to file

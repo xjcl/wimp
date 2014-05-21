@@ -1,29 +1,50 @@
-wimp = wimp is not mario party
+wimp = wimp is not mario party (shhh don't tell anyone
+    but actually it is...)
 
-modern, 21st cent mp for autists
+"modern, 21st cent mp for autists"
+- ok, we can take soooome fun action games...
+- actually, the games I had in mind take 15 minutes
+    or sth; much too long - maybe in extra mode?
+- ok, new tagline, get ready:
+- "AN OPEN-SOURCE, PURE PYTHONIC PARTYING SOLUTION". eh?
 
 features:
+- main feature: openness about data, savestates etc.!
+    e.g. show x/y-vectors at ball-wrestling-game
+
 - internet play (accompanied by skype is recommended)
 - boards (useful for other people to reuse/add to!)
 - elos for everyone (used for random pairing if ever needed)
-- 2d, minimalistic
-- uses nüppels(+imgs) instead of 3d-animations
+- 2d, minimalistic (though some shading effects would be nice)
 - 3 categories: reddit gold, dogecoin and karma (=luck)
 - needs more slots
 - definitive elements: boo (can choose from who to steal);
     position-swap
+    CHANCE TIME!!!
+
+minigames:
+- mg should be adaptable to 2/3/4 and possibly more!
+    so the pool for each in 2/3/4 should be
+    >= 1/4 * (all pools) ! (i.e. no # of players is preferred)
 - action-minigames:
-    * tetris?
+    * tetris vs
     * bowserfrucht
-    * ballroll
+    * minecart mash-n-lenk
+    * memory-pipes (pipes lead to ran locations)
+    * ballroll (ball-wrestling-game)
+    * some luck minigames for 'balance'
+        (BUT: each mg has a 'luck rating'! ideally by users)
 - non-action-minigames:
+    * ok what would actually work:
+        * chess variant on small board
+        * liars' poker (BUT: single-elimination!)
+        * 
     * ones of chess variants, mini-go?
     * cgs: commune, durak, ddz, skat, etc.
     * vector racer
-
-- moar chance time
 
 promotion:
 - reddit
 - lp on yt (if i make friend til then lol no)
 - maaaaybe contact trg no no no will never work no
+- MOAR CHANCE TIME!!
