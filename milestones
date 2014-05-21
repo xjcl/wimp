@@ -1,8 +1,8 @@
 x get basic board, chars and fields done
-- implement chance time
-- implement 1 minigame (button-mashing? lol)
+~ implement chance time
+x implement 1 minigame (button-mashing? lol)
     1 minigame for 2, 3 and 4 players!
-- add random star spawning spaces
+x add random star spawning spaces
 - ok we definitely need a visual representation (text/pyglet)
 
 

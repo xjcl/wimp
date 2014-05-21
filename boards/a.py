@@ -51,6 +51,19 @@ class BoardA(object):
         
         finit = field.Field(450, 350, ftype="start", next=f44)
         self.init_field = finit
+        self.star_field = None
+        
+        # ENUMERATE FIELDS -- NEEDED FOR STAR FIELD
+        self.fields = [f93, f94, f84, f74, f64, f54, f44, f34, f24, f14,
+                       f04, f03, f02, f01, f00, f10, f20, f30, f40, f50,
+                       f60, f70, f80, f90, f91, f12, f22, f32, f42, f52,
+                       f62, f72, f82, f92]
+        self.blue_fields = []
+        for f in self.fields:
+            if f.ftype == "blue":
+                self.blue_fields.append(f)
+
+
     
 """
     def __init__(self):
