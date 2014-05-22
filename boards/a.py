@@ -2,6 +2,7 @@ import field
 
 class BoardA(object):
     def __init__(self):
+        self.img_path = "a.png"
         # board is a directed graph
         
         # RIGHT PART

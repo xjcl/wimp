@@ -1,17 +1,15 @@
 import random
 
-import boards.a as ba
+import boards
 import chars
-#import mg # broken; mg.test doesn't work
-import mg.test
-import mg.mg_container
+import mg
 
 class Party(object):
     
     def __init__(self):
-        self.board = ba.BoardA()
-        self.chars = [chars.Char(self, "Chugga", True),
-                      chars.Char(self, "NCS"   , True)]
+        self.board = boards.a.BoardA()
+        self.chars = [chars.Char("Chugga", True),
+                      chars.Char("NCS"   , True)]
                       # it's not creepy k i only use
                       # the names to differentiate them.
         for c in self.chars:
@@ -124,7 +122,8 @@ class Party(object):
             # also positions, happening spaces, minigame money etc.
 
 
-print("\n\n\n")    
-p = Party()
-p.run()
+if __name__=="__main__":
+    print("\n\n\n")    
+    p = Party()
+    p.run()
 

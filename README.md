@@ -42,3 +42,11 @@ just enter the final score of each character.
 'left', 'up', 'right', 'down' to choose a path at a junction.
 
 'y', 'n' to choose whether to purchase a star.
+
+-------------------------
+
+'party_gui.py' is now partially functional!
+
+run it (after installind pyglet) and roll with 'r';
+
+choose junction with left/up/right/down (not yet implemented)
