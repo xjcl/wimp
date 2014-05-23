@@ -28,8 +28,6 @@ class Window(pyglet.window.Window):
         self.party_gui = PartyGui()
         # ------------------ IMAGES --------------------#
         self.board = pyglet.resource.image("boards/"+self.party_gui.party.board.img_path)
-        # i've got a tiny ass-screen so i'll with x and y for now! TODO
-        self.board = self.board.get_transform(rotate=270) 
         self.player0 = pyglet.resource.image("static/p0.png")
         self.player1 = pyglet.resource.image("static/p1.png")
         # ------------------ LABELS --------------------#
@@ -62,9 +60,9 @@ class Window(pyglet.window.Window):
         self.label1.text = self.party_gui.new_label_text(self.party_gui.party.chars[1])
         
         self.clear()
-        self.board.blit(self.width, 0) # y-values are upside-down! # or sth
-        self.player0.blit(self.party_gui.chars_gui[0].y-15, self.party_gui.chars_gui[0].x-15)
-        self.player1.blit(self.party_gui.chars_gui[1].y-15, self.party_gui.chars_gui[1].x-15)
+        self.board.blit(0, 0) # y-values are upside-down! # or sth
+        self.player0.blit(self.party_gui.chars_gui[0].x-15, self.party_gui.chars_gui[0].y-15)
+        self.player1.blit(self.party_gui.chars_gui[1].x-15, self.party_gui.chars_gui[1].y-15)
         self.label0.draw()
         self.label1.draw()
 

@@ -9,8 +9,8 @@ class CharGui(object):
             every frame instead of 'jumping' to the next
             field directly"""
         # call /after/ char has been placed on start
-        self.y = char.is_on.y
         self.x = char.is_on.x
+        self.y = char.is_on.y
         # to move per animation frame
         self.dy = 0
         self.dx = 0

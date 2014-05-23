@@ -47,6 +47,9 @@ just enter the final score of each character.
 
 'party_gui.py' is now partially functional!
 
-run it (after installind pyglet) and roll with 'r';
+run it (pyglet is required) and roll with 'r';
 
-choose junction with left/up/right/down (not yet implemented)
+choose junction with left/up/right/down
+(the board is turned 90 degrees ATM though)
+
+accept/decline a star with 'y'/'n'

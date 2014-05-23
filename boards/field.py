@@ -1,9 +1,9 @@
 class Junction(object):
 
-    def __init__(self, y, x, left_next=None, up_next=None,
+    def __init__(self, x, y, left_next=None, up_next=None,
                              right_next=None, down_next=None):
-        self.y = y
-        self.x = x # used for drawing lateron
+        self.x = x
+        self.y = y # used for drawing lateron
         # also for loading -- query by x,y coord
         self.ftype = "junction"
         self.left_next = left_next
@@ -32,9 +32,9 @@ class Junction(object):
 
 class Field(object):
 
-    def __init__(self, y, x, ftype="blue", next=None):
-        self.y = y
-        self.x = x # used for drawing lateron
+    def __init__(self, x, y, ftype="blue", next=None):
+        self.x = x
+        self.y = y # used for drawing lateron
         # also for loading -- query by x,y coord
         self.ftype = ftype
         self.next = next
