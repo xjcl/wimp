@@ -1,5 +1,6 @@
 # native libs
 import random
+import time
 
 # non-native libs
 import pyglet
@@ -8,67 +9,69 @@ import pyglet
 import chars_gui
 # local libs
 import party
-import boards
-import chars
-import mg
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 500
 
-class Window(pyglet.window.Window):
-    def __init__(self, *args, **kwargs):
-        super(Window, self).__init__(width=SCREEN_WIDTH, height=SCREEN_HEIGHT,
-                                     *args, **kwargs)
-        # ------------------ DATA --------------------#
+class PartyGui(object):
+    def __init__(self):
         self.party = party.Party()
         self.chars_gui = []
         for char in self.party.chars:
             self.chars_gui.append(chars_gui.CharGui(char))
-        self.state = "roll" # "roll", "choice", "star_choice"
-        self.whose_turn = self.chars_gui[0]
+            
+    def new_label_text(self, c):
+        return str(c)+": "+str(c.stars)+" stars and "+str(c.coins)+" coins"
+
+class Window(pyglet.window.Window):
+    def __init__(self, *args, **kwargs):
+        super(Window, self).__init__(width=1000, height=500,
+                                     *args, **kwargs)
+        self.party_gui = PartyGui()
         # ------------------ IMAGES --------------------#
-        self.board = pyglet.resource.image("boards/"+self.party.board.img_path)
+        self.board = pyglet.resource.image("boards/"+self.party_gui.party.board.img_path)
         # i've got a tiny ass-screen so i'll with x and y for now! TODO
         self.board = self.board.get_transform(rotate=270) 
+        self.player0 = pyglet.resource.image("static/p0.png")
+        self.player1 = pyglet.resource.image("static/p1.png")
+        # ------------------ LABELS --------------------#
+        self.label0 = pyglet.text.Label('Hello, world', font_name='Arial',
+                          font_size=18, x=30, y=0)
         self.label1 = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=36, x=self.width//2, y=self.height//2,
-                          anchor_x='center', anchor_y='center')
-        self.player0 = pyglet.resource.image("p0.png")
-        self.player1 = pyglet.resource.image("p1.png")
+                          font_size=18, x=self.width//2, y=0)
         # ------------------ MOAR --------------------#
+            
     
     def on_key_press(self, symbol, modifiers):
-        print("..")
-        if symbol == pyglet.window.key.LEFT:
-            print("check it out")
-        print("wat")
-        if self.state == "roll" and symbol == pyglet.window.key.R:
-            # roll
-            roll = random.randint(1,8)
-            print(str(self.whose_turn.char)+" rolled a "+str(roll)+" (out of 8)")
-            self.party.move_by(self.whose_turn.char, roll)
-            self.whose_turn.update_pos()
-            # change whose turn it is
-            #self.state = ""
-            i = self.chars_gui.index(self.whose_turn)
-            if i+1 == len(self.chars_gui):
-                i = 0
-            else:
-                i += 1
-            self.whose_turn = self.chars_gui[i]
+        if symbol == pyglet.window.key.R:
+            self.party_gui.party.roll_event()
+        if symbol in [pyglet.window.key.LEFT, pyglet.window.key.UP,
+                      pyglet.window.key.RIGHT, pyglet.window.key.DOWN]:
+            if symbol == pyglet.window.key.LEFT: cmd = "left"
+            if symbol == pyglet.window.key.UP: cmd = "up"
+            if symbol == pyglet.window.key.RIGHT: cmd = "right"
+            if symbol == pyglet.window.key.DOWN: cmd = "down"
+            self.party_gui.party.choice_event(cmd)
+        if symbol in [pyglet.window.key.Y, pyglet.window.key.N]:
+            if symbol == pyglet.window.key.Y: cmd = "y"
+            if symbol == pyglet.window.key.N: cmd = "n"
+            self.party_gui.party.star_choice_event(cmd)
         
     def on_draw(self):
+        for c in self.party_gui.chars_gui:
+            c.update_pos()
+        self.label0.text = self.party_gui.new_label_text(self.party_gui.party.chars[0])
+        self.label1.text = self.party_gui.new_label_text(self.party_gui.party.chars[1])
+        
         self.clear()
-        self.board.blit(SCREEN_WIDTH, 0) # y-values are upside-down!
-        self.player0.blit(self.chars_gui[0].y-15, self.chars_gui[0].x-15)
-        self.player1.blit(self.chars_gui[1].y-15, self.chars_gui[1].x-15)
+        self.board.blit(self.width, 0) # y-values are upside-down! # or sth
+        self.player0.blit(self.party_gui.chars_gui[0].y-15, self.party_gui.chars_gui[0].x-15)
+        self.player1.blit(self.party_gui.chars_gui[1].y-15, self.party_gui.chars_gui[1].x-15)
+        self.label0.draw()
         self.label1.draw()
 
 def main():
-    print(-3)
+    print("init window...")
     window = Window()
-    print(-2)
-    #pyglet.resource.image('denmark.png').blit(0,0)
+    print("done! init app...")
     pyglet.app.run()
 
 

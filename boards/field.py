@@ -11,6 +11,8 @@ class Junction(object):
         self.right_next = right_next
         self.down_next = down_next
         
+        self.chars_on = []
+        
     def is_valid(self, cmd):
         if cmd in ["left", "up", "right", "down"]:
             if cmd == "left"  and self.left_next:  return True
@@ -36,6 +38,8 @@ class Field(object):
         # also for loading -- query by x,y coord
         self.ftype = ftype
         self.next = next
+        # chars_on is needed in addition to char.is_on
+        # to draw chars 0,1,2 when it is 3's turn
         self.chars_on = []
     
     def get_pretty_coord(self):

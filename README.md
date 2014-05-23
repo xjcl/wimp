@@ -24,7 +24,7 @@ usage
 
 `git clone https://github.com/xjcl/wimp.git`
 
-`python party.py`
+`python party_term.py` or `python party_gui.py`
 
 blitz how-to-play guide
 =======================

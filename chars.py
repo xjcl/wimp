@@ -10,6 +10,8 @@ class Char(object):
         self.is_hmn = bool(is_hmn)
     def __str__(self):
         return self.name
+
+# -----------------------------------------------------------
           
     def get_roll(self):
         if self.is_hmn: # should I instead make a child class for CPUs?
@@ -37,3 +39,4 @@ class Char(object):
                 npt = raw_input("do you want this star? (y/n)\n> ")
             if npt == "y": return True
             if npt == "n": return False
+
