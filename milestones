@@ -1,21 +1,31 @@
-**** v0.0 ****
+**** v0.0 **** "is rly-ty"
+
 x get basic board, chars and fields done
 ~ implement chance time
 x implement 1 minigame (button-mashing? lol)
     1 minigame for 2, 3 and 4 players!
 x add random star spawning spaces
 
-**** v0.1 ****
-x get a visual representation and roll to work on it
-- visrep of the star space
-- allow input on junctions
-- display current standings constantly in corner
-- update at 30fps and not just at on_draw()
+**** v0.1 **** "nothing like cartesian coordinates on terminal amirite"
 
-**** v0.2 ****
+x get a visual representation and roll to work on it
+x visrep of the star space
+x allow input on junctions
+x display current standings constantly in corner
+x update at 30fps and not just at on_draw()
+
+**** v0.2 **** "if i had friends i could impress them"
+
+x animate movement across board
+- display roll on gui not just terminal
+- ask star question on gui
+- put out 'x start' on gui when it's rollin' time
+
+**** v0.3 ****
+
+**** v0.? ****
 - get a minimage working (independently)
 - interleave minigame with game logic
-- animate movement across board
 - get visrep of chance time; implement fully
 
 

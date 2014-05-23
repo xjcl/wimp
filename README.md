@@ -3,8 +3,7 @@ wimp
 
 "WIMP is not Mario Party". Instead, it's a fun board game of strategy and luck.
 
-dev
-===
+##dev
 
 WIMP is written in Python2 (2 required by Pyglet), which should allow for easy
 modification and addition of minigames, boards and modes.
@@ -18,26 +17,17 @@ PROGRESS IMAGE/VIDEO OF THE MONTH:
 
 /May isn't over yet/
 
-
-usage
-=====
+##usage
 
 `git clone https://github.com/xjcl/wimp.git`
 
 `python party_term.py` or `python party_gui.py`
 
-blitz how-to-play guide
-=======================
+###blitz how-to-play guide
 
-ATM you play two human players going around the board drawn
-in 'boards/a.png'. the terminal-based program will spit out
-coordinates in the form (y, x) to help you find out where
-you are.
+terminal-version('party_term.py'): usually more stable, less user-friendly
 
-the one minigame that's there ATM is a token minigame. you
-just enter the final score of each character.
-
-'roll' to roll your die.
+'roll' to roll your 8-sided die.
 
 'left', 'up', 'right', 'down' to choose a path at a junction.
 
@@ -45,11 +35,22 @@ just enter the final score of each character.
 
 -------------------------
 
-'party_gui.py' is now partially functional!
+gui-version: use this k. if the current one is broken,
 
-run it (pyglet is required) and roll with 'r';
+look out for the last v0.x release.
 
-choose junction with left/up/right/down
-(the board is turned 90 degrees ATM though)
+run 'party_gui.py' (pyglet is required) and roll with 'r';
 
-accept/decline a star with 'y'/'n'
+choose junction with left/up/right/down;
+
+accept/decline a star with 'y'/'n'.
+
+prompts will be available in the next version;
+
+in the meantime just spam 'r'
+
+##Other
+
+'milestones', 'idee' and 'workload' are meta-files;
+
+used for note-taking, progress-tracking etc.

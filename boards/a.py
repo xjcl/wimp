@@ -45,7 +45,7 @@ class BoardA(object):
         f82 = field.Field(850, 250, ftype="blue"  , next=f72)
         
         # JUNCTION - BOTTOM
-        f92 = field.Junction(950, 250, left_next=f91, up_next=f82)
+        f92 = field.Junction(950, 250, down_next=f91, left_next=f82)
         
         # JOIN INTO A CIRCLE
         f93.next = f92

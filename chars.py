@@ -7,6 +7,7 @@ class Char(object):
         self.coins = 10
         self.name = str(name)
         self.is_on = None
+        self.go_to = None
         self.is_hmn = bool(is_hmn)
     def __str__(self):
         return self.name
