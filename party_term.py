@@ -137,7 +137,7 @@ class PartyTerm(object):
                 char.coins = 0
             else:
                 lc = n
-                char.coins -= n
+                char.coins += n
             print(str(char)+" lost "+str(lc)+" coins")
         print("total: "+str(char.coins))
         return lc # lc = actually moved coins

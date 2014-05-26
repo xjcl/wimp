@@ -20,6 +20,7 @@ x animate movement across board
 x display roll on gui not just terminal
 - ask star question on gui
 x put out 'x start' on gui when it's rollin' time
+- tell player they don't have enough coins when passing star
 
 **** v0.3 ****
 

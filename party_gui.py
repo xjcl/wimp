@@ -218,10 +218,12 @@ class Window(pyglet.window.Window):
         self.label1 = pyglet.text.Label('Hello, world', font_name='Arial',
                           font_size=18, x=self.width//2, y=0)
         self.label_roll = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=18, x=self.width//2, y=0, color=(0,255,0,255))
+                          font_size=18, x=self.width//2, y=0, color=(0,255,0,255),
+                          anchor_x="center", anchor_y="center")
         self.label_start = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=18, x=self.width//2, y=self.height//2,
-                          color=(255,255,0,255))
+                          font_size=36, x=self.width//2, y=self.height//2,
+                          color=(255,255,0,255),
+                          anchor_x="center", anchor_y="center")
         # ------------------ MOAR --------------------#
     
     def on_key_press(self, symbol, modifiers):
@@ -251,12 +253,20 @@ class Window(pyglet.window.Window):
         lchar = self.party_gui.chars_gui[self.party_gui.party.whose_turn]
         self.star.blit(self.party_gui.party.board.star_field.x-45,
                        self.party_gui.party.board.star_field.y-45)
-        self.player0.blit(self.party_gui.chars_gui[0].x//1 -15,
-                          self.party_gui.chars_gui[0].y//1 -15)
-        self.player1.blit(self.party_gui.chars_gui[1].x//1 -15,
-                          self.party_gui.chars_gui[1].y//1 -15)
+        
+        # TODO fade towards borders/middle instead of jumping there in one frame
+        add_0 = 0 # lateron used to move inactive players away from
+        add_1 = 1 #     center field -- makes space for active player
+        if self.party_gui.party.whose_turn == 0: add_1 = 30
+        if self.party_gui.party.whose_turn == 1: add_0 = 30
+        self.player0.blit(self.party_gui.chars_gui[0].x//1 -15+add_0,
+                          self.party_gui.chars_gui[0].y//1 -15+add_0)
+        self.player1.blit(self.party_gui.chars_gui[1].x//1 -15+add_1,
+                          self.party_gui.chars_gui[1].y//1 -15+add_1)
+        
         self.label0.draw()
         self.label1.draw()
+        
         if self.party_gui.party.fields_to_move != 0:
             self.label_roll.x = lchar.x//1
             self.label_roll.y = lchar.y//1+30
