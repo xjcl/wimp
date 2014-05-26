@@ -1,6 +1,7 @@
 # native libs
 import random
 import time
+from math import copysign
 
 # non-native libs
 import pyglet
@@ -19,7 +20,7 @@ class PartyGui(object):
         for char in self.party.chars:
             self.land(char, self.party.board.init_field)
             self.chars_gui.append(chars_gui.CharGui(char))
-            char.go_to = char.is_on
+            char.go_to = char.is_on.next
         self.new_star_field()
         
         self.animation_phase = "nothing"
@@ -113,6 +114,7 @@ class PartyGui(object):
                 self.new_star_field()
             elif cmd == "n":
                 print("okay then you're weird lol")
+                lchar.go_to = lchar.is_on.next
 
 # -----------------------------------------------------------------
 
@@ -128,7 +130,7 @@ class PartyGui(object):
                 char.coins = 0
             else:
                 lc = n
-                char.coins -= n
+                char.coins += n # n<0! add negative coins!
             print(str(char)+" lost "+str(lc)+" coins")
         print("total: "+str(char.coins))
         return lc # lc = actually moved coins
@@ -136,11 +138,11 @@ class PartyGui(object):
 # -----------------------------------------------------------------    
     
     def init_animation(self, lchar, from_field, to_field):
-        if from_field == to_field: # sort out junctions
+        if from_field == to_field: # junctions should pass this 'if'
             lchar.char.go_to = lchar.char.is_on.next
             to_field = from_field.next
-        lchar.dy = (to_field.y-from_field.y)//10
-        lchar.dx = (to_field.x-from_field.x)//10
+        lchar.dy = 0.03*(to_field.y-from_field.y)
+        lchar.dx = 0.03*(to_field.x-from_field.x)
         self.animation_phase = "moving"
     
     def update(self):
@@ -154,7 +156,7 @@ class PartyGui(object):
                     if from_field.ftype == "junction" and from_field == to_field:
                         print("choose way at junction")
                         self.party.waiting_for = "choice"
-                    elif from_field.ftype == "star":
+                    elif from_field.ftype == "star" and from_field == to_field:
                         if lchar.char.coins < 20:
                             print("sorry, you can't get this star")
                             self.init_animation(lchar, from_field, to_field)
@@ -162,16 +164,28 @@ class PartyGui(object):
                             print("you want this ~*~*STAR*~*~")
                             self.party.waiting_for = "star choice"
                     else:
+                        # find next space and go there
                         self.init_animation(lchar, from_field, to_field)
                 if self.party.fields_to_move == 0:
+                    # landing on space
                     print("field lights up "+to_field.get_pretty_coord())
                     self.land(lchar.char, lchar.char.go_to)
                     self.advance_turn()
 
             if self.animation_phase == "moving":
+                # move towards space
                 lchar.y += lchar.dy
                 lchar.x += lchar.dx
-                if lchar.x == to_field.x and lchar.y == to_field.y:
+                # at this time of execution, lchar.char.go_to != to_field for
+                # some reason??
+                to_field = lchar.char.go_to
+                if (copysign(1, lchar.dx) == copysign(1, lchar.x-to_field.x) and
+                    copysign(1, lchar.dy) == copysign(1, lchar.y-to_field.y)):
+                    # arrival at space
+                    # 'if' above checks if on OR past space
+                    #   using 'copysign(1, x)', i.e. 'sgn()'
+                    lchar.x = to_field.x
+                    lchar.y = to_field.y
                     lchar.dy = 0
                     lchar.dx = 0
                     self.animation_phase = "nothing"
@@ -203,6 +217,11 @@ class Window(pyglet.window.Window):
                           font_size=18, x=30, y=0)
         self.label1 = pyglet.text.Label('Hello, world', font_name='Arial',
                           font_size=18, x=self.width//2, y=0)
+        self.label_roll = pyglet.text.Label('Hello, world', font_name='Arial',
+                          font_size=18, x=self.width//2, y=0, color=(0,255,0,255))
+        self.label_start = pyglet.text.Label('Hello, world', font_name='Arial',
+                          font_size=18, x=self.width//2, y=self.height//2,
+                          color=(255,255,0,255))
         # ------------------ MOAR --------------------#
     
     def on_key_press(self, symbol, modifiers):
@@ -229,12 +248,24 @@ class Window(pyglet.window.Window):
         self.board.blit(0, 0) # y-values are upside-down! # or sth
         self.label0.text = self.party_gui.new_label_text(self.party_gui.party.chars[0])
         self.label1.text = self.party_gui.new_label_text(self.party_gui.party.chars[1])
-        self.label0.draw()
-        self.label1.draw()
+        lchar = self.party_gui.chars_gui[self.party_gui.party.whose_turn]
         self.star.blit(self.party_gui.party.board.star_field.x-45,
                        self.party_gui.party.board.star_field.y-45)
-        self.player0.blit(self.party_gui.chars_gui[0].x-15, self.party_gui.chars_gui[0].y-15)
-        self.player1.blit(self.party_gui.chars_gui[1].x-15, self.party_gui.chars_gui[1].y-15)
+        self.player0.blit(self.party_gui.chars_gui[0].x//1 -15,
+                          self.party_gui.chars_gui[0].y//1 -15)
+        self.player1.blit(self.party_gui.chars_gui[1].x//1 -15,
+                          self.party_gui.chars_gui[1].y//1 -15)
+        self.label0.draw()
+        self.label1.draw()
+        if self.party_gui.party.fields_to_move != 0:
+            self.label_roll.x = lchar.x//1
+            self.label_roll.y = lchar.y//1+30
+            self.label_roll.text = str(self.party_gui.party.fields_to_move)
+            self.label_roll.draw()
+        if self.party_gui.party.waiting_for == "roll":
+            self.label_start.text = \
+                str(self.party_gui.party.chars[self.party_gui.party.whose_turn])+" START!"
+            self.label_start.draw()
         
 
 def main():
