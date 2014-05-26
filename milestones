@@ -17,17 +17,18 @@ x update at 30fps and not just at on_draw()
 **** v0.2 **** "if i had friends i could impress them"
 
 x animate movement across board
-- display roll on gui not just terminal
+x display roll on gui not just terminal
 - ask star question on gui
-- put out 'x start' on gui when it's rollin' time
+x put out 'x start' on gui when it's rollin' time
 
 **** v0.3 ****
 
-**** v0.? ****
 - get a minimage working (independently)
 - interleave minigame with game logic
 - get visrep of chance time; implement fully
+- add own font for rolls and/or bgs for 'x start'
 
+**** v0.4 ****
 
 ...
 - bump mg total up to 6
@@ -35,7 +36,9 @@ x animate movement across board
 ...
 - add ais, or pseudo-ais
 ...
-- draw on 2d-surface (pyglet? tkinter? pygame?)
+- use 3d spheres instead of 2d circles
+...
+- fix pyglet transparency layer issue
 ...
 - add internet functionality (like so or with web.py/gh-pages?)
 ...
