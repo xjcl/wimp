@@ -28,7 +28,7 @@ Run with `python party_term.py` or `python party_gui.py`
 terminal-version('party_term.py'): usually more stable, less user-friendly;
 might not make sense if you haven't looked at static/a.png or the gui version yet.
 
-* 'roll' to roll your 8-sided die.
+* 'r' to roll your 8-sided die.
 * 'left', 'up', 'right', 'down' to choose a path at a junction.
 * 'y', 'n' to choose whether to purchase a star.
 
@@ -40,6 +40,7 @@ look out for the last v0.x release.
 * run 'party_gui.py' (pyglet is required) and roll with 'r';
 * choose junction with left/up/right/down;
 * accept/decline a star with 'y'/'n'.
+* press 'k' on the message "you don't have enough coins for this star"
 
 prompts aren't always clearly marked. it is your turn when
 nothing is moving, so try all of the above commands.

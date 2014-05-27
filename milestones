@@ -18,11 +18,11 @@ x update at 30fps and not just at on_draw()
 
 x animate movement across board
 x display roll on gui not just terminal
-- ask star question on gui
+x ask star question on gui
 x put out 'x start' on gui when it's rollin' time
-- tell player they don't have enough coins when passing star
+x tell player they don't have enough coins when passing star
 
-**** v0.3 ****
+**** v0.3 **** "it looks good if you are me or have no eyes and cancer"
 
 - get a minimage working (independently)
 - interleave minigame with game logic
@@ -39,7 +39,8 @@ x put out 'x start' on gui when it's rollin' time
 ...
 - use 3d spheres instead of 2d circles
 ...
-- fix pyglet transparency layer issue
+x fix pyglet transparency layer issue
+- give circles/spheres a black 'casing' so that they look nicer/classier
 ...
 - add internet functionality (like so or with web.py/gh-pages?)
 ...

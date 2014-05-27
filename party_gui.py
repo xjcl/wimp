@@ -12,6 +12,7 @@ import chars_gui
 import party
 
 
+
 class PartyGui(object):
     def __init__(self, window):
         self.party = party.Party()
@@ -115,6 +116,12 @@ class PartyGui(object):
             elif cmd == "n":
                 print("okay then you're weird lol")
                 lchar.go_to = lchar.is_on.next
+                
+    def star_ok_event(self):
+        if self.party.waiting_for == "star ok":
+            lchar = self.party.chars[self.party.whose_turn]
+            self.party.waiting_for = "nothing"
+            lchar.go_to = lchar.is_on.next
 
 # -----------------------------------------------------------------
 
@@ -159,7 +166,8 @@ class PartyGui(object):
                     elif from_field.ftype == "star" and from_field == to_field:
                         if lchar.char.coins < 20:
                             print("sorry, you can't get this star")
-                            self.init_animation(lchar, from_field, to_field)
+                            #self.init_animation(lchar, from_field, to_field)
+                            self.party.waiting_for = "star ok"
                         else:
                             print("you want this ~*~*STAR*~*~")
                             self.party.waiting_for = "star choice"
@@ -209,9 +217,12 @@ class Window(pyglet.window.Window):
         pyglet.clock.set_fps_limit(30)
         # ------------------ IMAGES --------------------#
         self.board   = pyglet.resource.image("boards/"+self.party_gui.party.board.img_path)
-        self.player0 = pyglet.resource.image("static/p0.png")
-        self.player1 = pyglet.resource.image("static/p1.png")
-        self.star    = pyglet.resource.image("static/star.png")
+        lplayer0 = pyglet.resource.image("static/p0.png")
+        lplayer1 = pyglet.resource.image("static/p1.png")
+        self.player0 = pyglet.sprite.Sprite(lplayer0)
+        self.player1 = pyglet.sprite.Sprite(lplayer1)
+        lstar        = pyglet.resource.image("static/star.png")
+        self.star    = pyglet.sprite.Sprite(lstar)
         # ------------------ LABELS --------------------#
         self.label0 = pyglet.text.Label('Hello, world', font_name='Arial',
                           font_size=18, x=30, y=0)
@@ -240,6 +251,8 @@ class Window(pyglet.window.Window):
             if symbol == pyglet.window.key.Y: cmd = "y"
             if symbol == pyglet.window.key.N: cmd = "n"
             self.party_gui.star_choice_event(cmd)
+        if symbol == pyglet.window.key.K:
+            self.party_gui.star_ok_event()
         
     def on_draw(self, *args, **kwargs):
         # ------------ UPDATE MODEL -------------
@@ -251,18 +264,23 @@ class Window(pyglet.window.Window):
         self.label0.text = self.party_gui.new_label_text(self.party_gui.party.chars[0])
         self.label1.text = self.party_gui.new_label_text(self.party_gui.party.chars[1])
         lchar = self.party_gui.chars_gui[self.party_gui.party.whose_turn]
-        self.star.blit(self.party_gui.party.board.star_field.x-45,
-                       self.party_gui.party.board.star_field.y-45)
+        #self.star.blit(self.party_gui.party.board.star_field.x-45,
+        #               self.party_gui.party.board.star_field.y-45)
+        self.star.x = self.party_gui.party.board.star_field.x-45
+        self.star.y = self.party_gui.party.board.star_field.y-45
+        self.star.draw() # testing out sprites! XXX
         
         # TODO fade towards borders/middle instead of jumping there in one frame
         add_0 = 0 # lateron used to move inactive players away from
         add_1 = 1 #     center field -- makes space for active player
         if self.party_gui.party.whose_turn == 0: add_1 = 30
         if self.party_gui.party.whose_turn == 1: add_0 = 30
-        self.player0.blit(self.party_gui.chars_gui[0].x//1 -15+add_0,
-                          self.party_gui.chars_gui[0].y//1 -15+add_0)
-        self.player1.blit(self.party_gui.chars_gui[1].x//1 -15+add_1,
-                          self.party_gui.chars_gui[1].y//1 -15+add_1)
+        self.player0.x = self.party_gui.chars_gui[0].x//1 -15+add_0
+        self.player0.y = self.party_gui.chars_gui[0].y//1 -15+add_0
+        self.player1.x = self.party_gui.chars_gui[1].x//1 -15+add_1
+        self.player1.y = self.party_gui.chars_gui[1].y//1 -15+add_1
+        self.player0.draw()
+        self.player1.draw()
         
         self.label0.draw()
         self.label1.draw()
@@ -272,9 +290,23 @@ class Window(pyglet.window.Window):
             self.label_roll.y = lchar.y//1+30
             self.label_roll.text = str(self.party_gui.party.fields_to_move)
             self.label_roll.draw()
+            
         if self.party_gui.party.waiting_for == "roll":
+            self.label_start.font_size = 36
             self.label_start.text = \
                 str(self.party_gui.party.chars[self.party_gui.party.whose_turn])+" START!"
+            self.label_start.draw()
+        if self.party_gui.party.waiting_for == "star choice":
+            self.label_start.text = \
+                str(self.party_gui.party.chars[self.party_gui.party.whose_turn])+ \
+                ", do you want this ~*~*STAR*~*~? (y/n)"
+            self.label_start.font_size = 18
+            self.label_start.draw()
+        if self.party_gui.party.waiting_for == "star ok":
+            self.label_start.text = \
+                str(self.party_gui.party.chars[self.party_gui.party.whose_turn])+ \
+                ", you don't have enough coins for this star"
+            self.label_start.font_size = 18
             self.label_start.draw()
         
 

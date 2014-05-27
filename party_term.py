@@ -103,11 +103,11 @@ class PartyTerm(object):
     
     def choice_event(self, cmd):
         if self.party.waiting_for == "choice":
-            self.party.waiting_for = "nothing"
             lchar = self.party.chars[self.party.whose_turn]
             junction = lchar.is_on
             if junction.is_valid(cmd): #"show map" etc. 
                 print("so valid")
+                self.party.waiting_for = "nothing"
                 self.move(lchar, to_field=junction.get_next(cmd))
         
     def star_choice_event(self, cmd):
