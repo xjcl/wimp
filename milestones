@@ -24,12 +24,17 @@ x tell player they don't have enough coins when passing star
 
 **** v0.3 **** "it looks good if you are me or have no eyes and cancer"
 
-- get a minimage working (independently)
+x get a minimage working (independently)
 - interleave minigame with game logic
-- get visrep of chance time; implement fully
-- add own font for rolls and/or bgs for 'x start'
+- display standings after each mg
 
 **** v0.4 ****
+
+- get visrep of chance time; implement fully
+- add own font for rolls and/or bgs for 'x start'
+- generally improve art (look into 3d maybe?)
+
+**** v0.5 ****
 
 ...
 - bump mg total up to 6

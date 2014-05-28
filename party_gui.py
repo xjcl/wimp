@@ -14,9 +14,8 @@ import party
 
 
 class PartyGui(object):
-    def __init__(self, window):
+    def __init__(self):
         self.party = party.Party()
-        self.window = window
         self.chars_gui = []
         for char in self.party.chars:
             self.land(char, self.party.board.init_field)
@@ -211,7 +210,7 @@ class Window(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
         super(Window, self).__init__(width=1000, height=500,
                                      *args, **kwargs)
-        self.party_gui = PartyGui(self)
+        self.party_gui = PartyGui()
         # ------------------ CLOCK --------------------#
         pyglet.clock.schedule_interval(self.on_draw, 1.0/30.0)
         pyglet.clock.set_fps_limit(30)
