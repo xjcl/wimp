@@ -5,4 +5,4 @@ If each programmer earns $20 per hour, that's >$200'000.
 
 workload_mp:   10'000
 workload_goal:    100
-workload_done:     16 "why don't i use existing engine: REASONS"
+workload_done:     17.5 "new design philosophy #15 init (innit?)"

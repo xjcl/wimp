@@ -25,7 +25,7 @@ x tell player they don't have enough coins when passing star
 **** v0.3 **** "it looks good if you are me or have no eyes and cancer"
 
 x get a minimage working (independently)
-- interleave minigame with game logic
+~ interleave minigame with game logic
 - display standings after each mg
 
 **** v0.4 ****

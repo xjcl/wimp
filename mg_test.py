@@ -33,25 +33,10 @@ class Window(pyglet.window.Window):
                           anchor_x="center", anchor_y="center")
         # ------------------ MOAR --------------------#
     def on_key_release(self, symbol, modifiers):
-        if symbol in [pyglet.window.key.LEFT, pyglet.window.key.UP,
-                      pyglet.window.key.RIGHT, pyglet.window.key.DOWN]:
-            if symbol == pyglet.window.key.LEFT : cmd = "left"
-            if symbol == pyglet.window.key.UP   : cmd = "up"
-            if symbol == pyglet.window.key.RIGHT: cmd = "right"
-            if symbol == pyglet.window.key.DOWN : cmd = "down"
-            self.mg_container.undir_event(cmd)
+        self.mg_container.on_key_release(symbol, modifiers)
     
     def on_key_press(self, symbol, modifiers):
-        if symbol in [pyglet.window.key.LEFT, pyglet.window.key.UP,
-                      pyglet.window.key.RIGHT, pyglet.window.key.DOWN]:
-            if symbol == pyglet.window.key.LEFT : cmd = "left"
-            if symbol == pyglet.window.key.UP   : cmd = "up"
-            if symbol == pyglet.window.key.RIGHT: cmd = "right"
-            if symbol == pyglet.window.key.DOWN : cmd = "down"
-            self.mg_container.dir_event(cmd)
-            
-        if symbol == pyglet.window.key.K:
-            self.mg_container.start_event()
+        self.mg_container.on_key_press(symbol, modifiers)
         
         
     def on_draw(self, *args, **kwargs):

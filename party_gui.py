@@ -8,7 +8,8 @@ import pyglet
 
 # local gui libs
 import chars_gui
-# local libs
+import mg
+# local model libs
 import party
 
 
@@ -204,20 +205,15 @@ class PartyGui(object):
     
 # -----------------------------------------------------------------    
 
-
-
-class Window(pyglet.window.Window):
-    def __init__(self, *args, **kwargs):
-        super(Window, self).__init__(width=1000, height=500,
-                                     *args, **kwargs)
-        self.party_gui = PartyGui()
-        # ------------------ CLOCK --------------------#
-        pyglet.clock.schedule_interval(self.on_draw, 1.0/30.0)
-        pyglet.clock.set_fps_limit(30)
+class PartyView(object):
+    def __init__(self, window):
+        self.w = window
+        self.party_gui = window.party_gui
         # ------------------ IMAGES --------------------#
-        self.board   = pyglet.resource.image("boards/"+self.party_gui.party.board.img_path)
-        lplayer0 = pyglet.resource.image("static/p0.png")
-        lplayer1 = pyglet.resource.image("static/p1.png")
+        lboard       = pyglet.resource.image("boards/"+self.party_gui.party.board.img_path)
+        self.board   = pyglet.sprite.Sprite(lboard)
+        lplayer0     = pyglet.resource.image("static/p0.png")
+        lplayer1     = pyglet.resource.image("static/p1.png")
         self.player0 = pyglet.sprite.Sprite(lplayer0)
         self.player1 = pyglet.sprite.Sprite(lplayer1)
         lstar        = pyglet.resource.image("static/star.png")
@@ -226,25 +222,25 @@ class Window(pyglet.window.Window):
         self.label0 = pyglet.text.Label('Hello, world', font_name='Arial',
                           font_size=18, x=30, y=0)
         self.label1 = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=18, x=self.width//2, y=0)
+                          font_size=18, x=self.w.width//2, y=0)
         self.label_roll = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=18, x=self.width//2, y=0, color=(0,255,0,255),
+                          font_size=18, x=self.w.width//2, y=0, color=(0,255,0,255),
                           anchor_x="center", anchor_y="center")
         self.label_start = pyglet.text.Label('Hello, world', font_name='Arial',
-                          font_size=36, x=self.width//2, y=self.height//2,
+                          font_size=36, x=self.w.width//2, y=self.w.height//2,
                           color=(255,255,0,255),
                           anchor_x="center", anchor_y="center")
         # ------------------ MOAR --------------------#
-    
+
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.R:
             self.party_gui.roll_event()
         if symbol in [pyglet.window.key.LEFT, pyglet.window.key.UP,
                       pyglet.window.key.RIGHT, pyglet.window.key.DOWN]:
-            if symbol == pyglet.window.key.LEFT: cmd = "left"
-            if symbol == pyglet.window.key.UP: cmd = "up"
+            if symbol == pyglet.window.key.LEFT : cmd = "left"
+            if symbol == pyglet.window.key.UP   : cmd = "up"
             if symbol == pyglet.window.key.RIGHT: cmd = "right"
-            if symbol == pyglet.window.key.DOWN: cmd = "down"
+            if symbol == pyglet.window.key.DOWN : cmd = "down"
             self.party_gui.choice_event(cmd)
         if symbol in [pyglet.window.key.Y, pyglet.window.key.N]:
             if symbol == pyglet.window.key.Y: cmd = "y"
@@ -252,14 +248,14 @@ class Window(pyglet.window.Window):
             self.party_gui.star_choice_event(cmd)
         if symbol == pyglet.window.key.K:
             self.party_gui.star_ok_event()
-        
+
     def on_draw(self, *args, **kwargs):
         # ------------ UPDATE MODEL -------------
         self.party_gui.update()
         
         # ------------ UPDATE VIEW -------------
-        self.clear()
-        self.board.blit(0, 0) # y-values are upside-down! # or sth
+        self.board.x, self.board.y = 0, 0 # y-values are upside-down! # or sth
+        self.board.draw()
         self.label0.text = self.party_gui.new_label_text(self.party_gui.party.chars[0])
         self.label1.text = self.party_gui.new_label_text(self.party_gui.party.chars[1])
         lchar = self.party_gui.chars_gui[self.party_gui.party.whose_turn]
@@ -307,7 +303,49 @@ class Window(pyglet.window.Window):
                 ", you don't have enough coins for this star"
             self.label_start.font_size = 18
             self.label_start.draw()
+            
+
+    def on_key_release(self, symbol, modifiers):
+        pass
+
+
+
+
+class Window(pyglet.window.Window):
+    def __init__(self, *args, **kwargs):
+        super(Window, self).__init__(width=1000, height=500,
+                                     *args, **kwargs)
+        # ------------------ PARTY --------------------#
+        self.party_gui = PartyGui()
+        self.party_view = PartyView(self)
+        # ------------------ MINIG --------------------#
+        the_window = self
+        self.mgc_view = mg.mg_container.MgContainerView \
+            (self.party_gui.party.chars, the_window)
+        # ------------------ CLOCK --------------------#
+        pyglet.clock.schedule_interval(self.on_draw, 1.0/30.0)
+        pyglet.clock.set_fps_limit(30)
+    
+    def on_key_release(self, symbol, modifiers):
+        if self.party_gui.party.waiting_for != "minigame":
+            self.party_view.on_key_release(symbol, modifiers)
+        else:
+            self.mgc_view.on_key_release(symbol, modifiers)
+            
+    def on_key_press(self, symbol, modifiers):
+        if self.party_gui.party.waiting_for != "minigame":
+            self.party_view.on_key_press(symbol, modifiers)
+        else:
+            self.mgc_view.on_key_press(symbol, modifiers)
         
+    def on_draw(self, *args, **kwargs):
+        self.clear()
+        if self.party_gui.party.waiting_for != "minigame":
+            self.party_view.on_draw(*args, **kwargs)
+        else:
+            self.mgc_view.on_draw(*args, **kwargs)
+            
+
 
 def main():
     print("init window...")
